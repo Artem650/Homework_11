@@ -10,17 +10,16 @@ class Field:
         return str(self.value)
     
 
-class Name(Field):
-    def __init__(self, value):
-        if not value:
-            raise ValueError("Name can't be empty")
-        super().__init__(value)
-
-
 class Phone(Field):
     def __init__(self, value):
         if len(value) != 10 or not value.isdigit():
             raise ValueError("Phone number must be a 10-digit number")
+        super().__init__(value)
+
+class Name(Field):
+    def __init__(self, value):
+        if not value:
+            raise ValueError("Name can't be empty")
         super().__init__(value)
 
 
@@ -44,19 +43,19 @@ class Record:
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
 
-    def remove_phone(self, phone):
-        self.phones = [p for p in self.phones if p.value != phone]
-
     def edit_phone(self, old_phone, new_phone):
         for phone in self.phones:
             if phone.value == old_phone:
                 phone.value = new_phone
                 return
         raise ValueError(f"Phone number '{old_phone}' wasn't found")
-
+    
     def find_phone(self, phone):
         phones_found = [p for p in self.phones if p.value == phone]
         return phones_found[0] if phones_found else None
+
+    def remove_phone(self, phone):
+        self.phones = [p for p in self.phones if p.value != phone]
 
     def days_to_birthday(self):
         if not self.birthday:
