@@ -1,12 +1,14 @@
 from collections import UserDict
 from datetime import datetime
 
+
 class Field:
     def __init__(self, value):
         self.value = value
 
     def __str__(self):
         return str(self.value)
+    
 
 class Name(Field):
     def __init__(self, value):
@@ -14,11 +16,13 @@ class Name(Field):
             raise ValueError("Name can't be empty")
         super().__init__(value)
 
+
 class Phone(Field):
     def __init__(self, value):
         if len(value) != 10 or not value.isdigit():
             raise ValueError("Phone number must be a 10-digit number")
         super().__init__(value)
+
 
 class Birthday(Field):
     def __init__(self, value):
@@ -27,6 +31,7 @@ class Birthday(Field):
         except ValueError:
             raise ValueError("Incorrect date format for Birthday")
         super().__init__(value)
+
 
 class Record:
     def __init__(self, name, birthday=None):
@@ -67,6 +72,7 @@ class Record:
 
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(str(p) for p in self.phones)}"
+
 
 class AddressBook(UserDict):
     def add_record(self, record):
